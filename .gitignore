@@ -1,0 +1,7 @@
+*.pth
+data/
+datasets/
+
+
+!README.md
+!.gitignore

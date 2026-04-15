@@ -22,18 +22,12 @@ def apply_transform(image, scale, rotation, translation_x, translation_y, flip_h
     # Note: for scale and rotation, implement them around the center of the image （围绕图像中心进行放缩和旋转）
     h, w = image.shape[:2]
     
-    # 1. 计算图像中心坐标
+    # 计算图像中心坐标
     center_x = w / 2.0
     center_y = h / 2.0
     
-    # 2. 构建变换矩阵（按顺序：缩放 -> 旋转 -> 平移 -> 翻转）
-    # 使用齐次坐标构建复合变换矩阵
-    
-    # 初始化单位矩阵 (3x3)
+    # 变换矩阵
     transform_matrix = np.eye(3)
-    
-    # 2.1 缩放变换（围绕中心）
-    # 先平移到原点，缩放，再平移回来
     T1 = np.array([[1, 0, -center_x],
                    [0, 1, -center_y],
                    [0, 0, 1]])
@@ -49,11 +43,10 @@ def apply_transform(image, scale, rotation, translation_x, translation_y, flip_h
     scale_matrix = T2 @ S @ T1
     transform_matrix = scale_matrix @ transform_matrix
     
-    # 2.2 旋转变换（围绕中心）
     angle_rad = np.radians(rotation)
     cos_theta = np.cos(angle_rad)
     sin_theta = np.sin(angle_rad)
-    
+    #旋转
     T1_rot = np.array([[1, 0, -center_x],
                        [0, 1, -center_y],
                        [0, 0, 1]])
@@ -69,13 +62,13 @@ def apply_transform(image, scale, rotation, translation_x, translation_y, flip_h
     rotation_matrix = T2_rot @ R @ T1_rot
     transform_matrix = rotation_matrix @ transform_matrix
     
-    # 2.3 平移变换
+    # 平移
     translation_matrix = np.array([[1, 0, translation_x],
                                    [0, 1, translation_y],
                                    [0, 0, 1]])
     transform_matrix = translation_matrix @ transform_matrix
     
-    # 2.4 水平翻转（围绕中心）
+    # 水平翻转
     if flip_horizontal:
         T1_flip = np.array([[1, 0, -center_x],
                             [0, 1, -center_y],
@@ -92,10 +85,9 @@ def apply_transform(image, scale, rotation, translation_x, translation_y, flip_h
         flip_matrix = T2_flip @ F @ T1_flip
         transform_matrix = flip_matrix @ transform_matrix
     
-    # 3. 提取 2x3 仿射变换矩阵（OpenCV 格式）
+    # 提取 2x3 仿射变换矩阵
     affine_matrix = transform_matrix[:2, :]
     
-    # 4. 应用仿射变换
     transformed_image = cv2.warpAffine(
         image, 
         affine_matrix, 

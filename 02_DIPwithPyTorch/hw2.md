@@ -2,46 +2,30 @@
 
 This repository contains two parts:
 
-1. **Poisson Image Editing (PyTorch + Gradio)**
-2. **Pix2Pix Image-to-Image Translation (Fully Convolutional Network)**
-
----
-
-## ## Overview
-
-### 🔹 Part 1: Poisson Image Editing
-
-We implement **Poisson Image Blending** using PyTorch optimization.
-
-Key components:
-
-* Polygon-based mask generation
-* Laplacian constraint formulation
-* Gradient-domain blending via optimization
-
-You completed:
-
-* `create_mask_from_points` (Polygon → Mask)
-* `cal_laplacian_loss` (Laplacian consistency loss)
-
----
-
-### 🔹 Part 2: Pix2Pix Implementation
-
-We implement a **Fully Convolutional Encoder–Decoder Network** for image-to-image translation.
-
-Key features:
-
-* Downsampling via Conv layers
-* Upsampling via ConvTranspose layers
-* Output normalized to ([-1,1]) using `Tanh`
+1. **Implement Poisson Image Editing with PyTorch.**
+2. **Pix2Pix Implementation**
 
 ---
 
 ## ## Requirements
 
+To install a virtual environment:
+
+```bash
+conda create -n dip_env python=3.11
+conda activate dip_env
+```
+
+To install requirements:
+
 ```bash
 pip install torch torchvision numpy pillow gradio opencv-python
+```
+
+To contain more images for better generalization on the validation set:
+
+```bash
+bash download_facades_dataset.sh
 ```
 
 ---
@@ -108,12 +92,26 @@ Only computed inside mask.
 
 * Variable: blended image
 * Optimizer: Adam
-* Iterations: 5000
+* Iterations(**iter_num**): 5000
 * Learning rate decay at 2/3 steps
 
 ---
 
+###   🔹 Cases
+
+![alt](pics\monolisa.png)
+
+ ![alt](pics\water.png)
+
+ ![alt](pics\equation.png)
+
+---
+
+
+
 ## ## Pix2Pix Model
+
+### Train the model on the [pix2pix](https://github.com/phillipi/pix2pix#datasets).
 
 ### Architecture
 
@@ -142,61 +140,20 @@ Tanh()
 x → Encoder → Bottleneck → Decoder → Output
 ```
 
-No skip connections (simplified Pix2Pix).
-
 ---
 
-## ## Training (Pix2Pix)
+## ## Training (Pix2Pix) and Evaluation
+
+**Train on a larger Pix2Pix dataset and generate 'val_results'.**
 
 ```bash
 python train.py
 ```
 
-（如果你没写 train.py，可以写成说明性内容）
-
 Typical settings:
 
 * Loss: L1 / MSE
 * Optimizer: Adam
-* Learning rate: 1e-4
+* Learning rate: 1e-3
 
 ---
-
-## ## Results
-
-### Poisson Blending
-
-* Smooth transition at boundary
-* Gradient consistency preserved
-* No visible seams
-
-### Pix2Pix
-
-| Model               | Output                              |
-| ------------------- | ----------------------------------- |
-| FCN Encoder-Decoder | Reasonable structure reconstruction |
-
-（你可以放截图）
-
----
-
-## ## Key Insights
-
-### Poisson Editing
-
-* Works in **gradient domain**
-* Avoids intensity discontinuity
-* Optimization-based (slow but accurate)
-
-### Pix2Pix
-
-* Learns **mapping instead of solving PDE**
-* Faster inference
-* Depends on training data
-
----
-
-
-
-
-

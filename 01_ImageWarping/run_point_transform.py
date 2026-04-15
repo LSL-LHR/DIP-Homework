@@ -49,7 +49,7 @@ def point_guided_deformation(image, source_pts, target_pts, alpha=1.0, eps=1e-8)
 
     warped_image = np.array(image)
     ### FILL: Implement MLS or RBF based image warping
-    # 检查控制点数量
+
     if len(source_pts) < 2 or len(target_pts) < 2:
         return warped_image
     
@@ -58,7 +58,7 @@ def point_guided_deformation(image, source_pts, target_pts, alpha=1.0, eps=1e-8)
     p = source_pts[:n_points].astype(np.float64)
     q = target_pts[:n_points].astype(np.float64)
     
-    # 创建像素网格
+    # 创建网格
     x_coords, y_coords = np.meshgrid(np.arange(w), np.arange(h))
     pixels = np.stack([x_coords.ravel(), y_coords.ravel()], axis=1).astype(np.float64)
     
@@ -93,7 +93,7 @@ def point_guided_deformation(image, source_pts, target_pts, alpha=1.0, eps=1e-8)
         q_hat = q[np.newaxis, :, :] - q_star[:, np.newaxis, :]
         v_hat = v - p_star
         
-        # 计算仿射变换
+        # 仿射变换
         for i in range(batch_len):
             P = p_hat[i].T
             Q = q_hat[i].T
@@ -108,7 +108,7 @@ def point_guided_deformation(image, source_pts, target_pts, alpha=1.0, eps=1e-8)
             except:
                 warped_pixels[start_idx + i] = v[i]
     
-    # 重塑并重映射
+    # 重映射
     warped_x = warped_pixels[:, 0].reshape(h, w).astype(np.float32)
     warped_y = warped_pixels[:, 1].reshape(h, w).astype(np.float32)
     

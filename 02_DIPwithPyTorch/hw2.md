@@ -142,7 +142,7 @@ x → Encoder → Bottleneck → Decoder → Output
 
 ---
 
-## ## Training (Pix2Pix) and Evaluation
+## Training (Pix2Pix) and Evaluation
 
 **Train on a larger Pix2Pix dataset and generate 'val_results'.**
 

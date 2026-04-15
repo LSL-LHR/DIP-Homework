@@ -99,11 +99,13 @@ Only computed inside mask.
 
 ###   🔹 Cases
 
-![alt](pics\monolisa.png)
+<img src="pics/monolisa.png" alt="monolisa" width="800">
 
- ![alt](pics\water.png)
 
- ![alt](pics\equation.png)
+
+ <img src="pics/water.png" alt="water" width="800">
+
+ <img src="pics/equation.png" alt="equation" width="800">
 
 ---
 

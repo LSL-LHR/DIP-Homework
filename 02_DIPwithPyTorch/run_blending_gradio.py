@@ -160,8 +160,8 @@ def cal_laplacian_loss(foreground_img, foreground_mask, blended_img, background_
     blended_laplacian = F.conv2d(blended_img, laplacian_kernel, padding=1, groups=3)
     #blended_laplacian_masked = blended_laplacian * background_mask
     
-    # 应该在重叠区域（blending boundary）计算
-    overlap_mask = foreground_mask * background_mask  # 交集
+    # 重叠区域计算
+    overlap_mask = foreground_mask * background_mask 
     if overlap_mask.sum() < 1:
         return torch.tensor(0.0, device=overlap_mask.device)
 
@@ -222,8 +222,7 @@ def blending(foreground_image_original, background_image_original, dx, dy, polyg
     # Optimization loop
     iter_num = 5000
     for step in range(iter_num):
-        blended_img_for_loss = blended_img.detach() * (1. - bg_mask_tensor) + blended_img * bg_mask_tensor  # Only blending in the mask region
-
+        blended_img_for_loss = blended_img * (1. - bg_mask_tensor) + blended_img * bg_mask_tensor  # Only blending in the mask region
         loss = cal_laplacian_loss(fg_img_tensor, fg_mask_tensor, blended_img_for_loss, bg_mask_tensor)
 
         optimizer.zero_grad()

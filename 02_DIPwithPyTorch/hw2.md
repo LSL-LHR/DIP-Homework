@@ -1,4 +1,4 @@
-## # Poisson Image Editing and Pix2Pix Implementation
+# Poisson Image Editing and Pix2Pix Implementation
 
 This repository contains two parts:
 
@@ -7,7 +7,7 @@ This repository contains two parts:
 
 ---
 
-## ## Requirements
+## Requirements
 
 To install a virtual environment:
 
@@ -30,7 +30,7 @@ bash download_facades_dataset.sh
 
 ---
 
-## ## Running Poisson Image Editing
+## Running Poisson Image Editing
 
 ```bash
 python run_blending_gradio.py
@@ -49,7 +49,7 @@ Then open the Gradio interface in browser.
 
 ---
 
-## ## Method Details
+## Method Details
 
 ### 🔹 Mask Generation
 
@@ -72,7 +72,7 @@ We enforce **gradient consistency** between foreground and blended image.
 
 Using discrete Laplacian:
 
-\nabla^2 I = I_{x+1,y} + I_{x-1,y} + I_{x,y+1} + I_{x,y-1} - 4I_{x,y}
+$$\nabla^2 I = I_{x+1,y} + I_{x-1,y} + I_{x,y+1} + I_{x,y-1} - 4I_{x,y}$$
 
 In code:
 
@@ -80,9 +80,7 @@ In code:
 * Applied channel-wise (groups=3)
 * Loss:
 
-[
-\mathcal{L} = | \nabla^2 I_{fg} - \nabla^2 I_{blend} |^2
-]
+$$\mathcal{L} = | \nabla^2 I_{fg} - \nabla^2 I_{blend} |^2$$
 
 Only computed inside mask.
 
@@ -111,7 +109,7 @@ Only computed inside mask.
 
 
 
-## ## Pix2Pix Model
+## Pix2Pix Model
 
 ### Train the model on the [pix2pix](https://github.com/phillipi/pix2pix#datasets).
 

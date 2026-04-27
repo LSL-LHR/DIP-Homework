@@ -135,13 +135,14 @@ data/colmap/
 
 ### Task 1: Bundle Adjustment
 
-**Loss Curve:**
+**Optimization Results (Loss Curve + 3D Point Cloud):**
 
-<img src="ba_loss.png" alt="loss curve" width="400">
+<img src="ba_results.png" alt="BA results" width="800">
 
-**Reconstructed 3D Point Cloud:**
+**Reconstructed 3D Model:**
 
-<img src="ba_result.png" alt="reconstruction" width="400">
+- Saved as `data/reconstruction.obj`
+- Open with MeshLab or any 3D viewer
 
 **Estimated Parameters:**
 
@@ -155,13 +156,13 @@ data/colmap/
 
 **Sparse Reconstruction:**
 
-<img src="colmap_sparse.png" alt="colmap sparse" width="400">
+<img src="pics/colmap_sparse00.png" alt="colmap sparse" width="400">
 
 Number of sparse points: ~15,000
 
 **Dense Reconstruction:**
 
-<img src="colmap_dense.png" alt="colmap dense" width="400">
+<img src="pics/colmap_dense01.png" alt="colmap dense" width="400">
 
 Number of dense points: ~2,000,000
 

@@ -3,12 +3,19 @@ data/
 datasets/
 model.py
 dip_venv/
+Assignments/
 __pycache__/
 *.py[cod]
 
 # Generated assignment artifacts
-Assignments/04_3DGS/eval/
-Assignments/04_3DGS/simple_mem.txt
+04_3DGS/data/**
+!04_3DGS/data/
+!04_3DGS/data/chair/
+!04_3DGS/data/chair/render_mv.mp4
+04_3DGS/eval/
+04_3DGS/simple_mem.txt
+04_3DGS/渲染质量.png
+04_3DGS/训练速度_official.png
 
 !README.md
 !.gitignore

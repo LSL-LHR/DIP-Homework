@@ -61,10 +61,12 @@ $$
 2. 在 `gaussian_renderer.py` 中实现从三维高斯到二维图像平面的投影。使用针孔相机投影的 Jacobian `J`，并结合相机旋转矩阵得到二维协方差：
 
    $$
-   \Sigma_{2D} = J R_{cam} \Sigma_{3D} R_{cam}^T J^T
+   \Sigma_{2D}
+   =
+   J R_{\mathrm{cam}} \Sigma_{3D} R_{\mathrm{cam}}^T J^T
    $$
 
-   其中 `R_cam` 是世界坐标到相机坐标的旋转部分，`J` 是透视投影函数在当前 3D Gaussian 中心处的一阶 Jacobian。
+   其中 $R_{\mathrm{cam}}$ 是世界坐标到相机坐标的旋转部分，$J$ 是透视投影函数在当前 3D Gaussian 中心处的一阶 Jacobian。
 
 3. 在二维图像平面上计算每个 Gaussian 的密度，并按照深度顺序进行 alpha blending，得到最终渲染图像。
 

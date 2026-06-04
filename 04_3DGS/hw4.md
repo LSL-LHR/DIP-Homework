@@ -51,10 +51,10 @@ data/chair/projections
 1. 在 `gaussian_model.py` 中实现三维高斯协方差矩阵计算。每个 3D Gaussian 的尺度由对角矩阵 `S` 表示，旋转由四元数转换得到的旋转矩阵 `R` 表示，因此三维协方差矩阵为：
 
    $$
-   \Sigma_{3D} = R S S^T R^T,
-   \qquad
-   S = \operatorname{diag}(s_x, s_y, s_z)
-   $$
+\Sigma_{3D} = R S S^T R^T,
+\qquad
+S = \mathrm{diag}(s_x, s_y, s_z)
+$$
 
    这样可以保证协方差矩阵是半正定的，同时通过 `S` 控制 Gaussian 在三个主轴方向上的尺度，通过 `R` 控制 Gaussian 的空间朝向。
 

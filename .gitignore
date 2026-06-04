@@ -1,8 +1,0 @@
-model.py
-dip_venv/
-__pycache__/
-*.py[cod]
-
-# Generated assignment artifacts
-Assignments/04_3DGS/eval/
-Assignments/04_3DGS/simple_mem.txt

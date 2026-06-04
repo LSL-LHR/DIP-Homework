@@ -46,31 +46,31 @@ data/chair/projections
 
 ## Task 2: 简化版 PyTorch 3DGS
 
-简化版 3DGS 以 COLMAP 稀疏点作为初始化点云，并为每个点维护位置、尺度、旋转、透明度和颜色等可学习参数。本次实现中主要完成了以下模块：
+简化版 3DGS 以 COLMAP 稀疏点作为初始化点云，并为每个点维护位置、尺度、旋转、透明度和颜色等可学习参数。本次实现中主要完成了以下模块。
 
-1. 在 `gaussian_model.py` 中实现三维高斯协方差矩阵计算。每个 3D Gaussian 的尺度由对角矩阵 `S` 表示，旋转由四元数转换得到的旋转矩阵 `R` 表示，因此三维协方差矩阵为：
+### 2.1 3D Gaussian 协方差
 
-   $$
-\Sigma_{3D} = R S S^T R^T,
-\qquad
-S = \mathrm{diag}(s_x, s_y, s_z)
-$$
+在 `gaussian_model.py` 中实现三维高斯协方差矩阵计算。每个 3D Gaussian 的尺度由对角矩阵 `S` 表示，旋转由四元数转换得到的旋转矩阵 `R` 表示，因此三维协方差矩阵为：
 
-   这样可以保证协方差矩阵是半正定的，同时通过 `S` 控制 Gaussian 在三个主轴方向上的尺度，通过 `R` 控制 Gaussian 的空间朝向。
+$$\Sigma_{3D} = R S S^T R^T,\quad S = \mathrm{diag}(s_x, s_y, s_z)$$
 
-2. 在 `gaussian_renderer.py` 中实现从三维高斯到二维图像平面的投影。使用针孔相机投影的 Jacobian `J`，并结合相机旋转矩阵得到二维协方差：
+这样可以保证协方差矩阵是半正定的，同时通过 `S` 控制 Gaussian 在三个主轴方向上的尺度，通过 `R` 控制 Gaussian 的空间朝向。
 
-   $$
-   \Sigma_{2D}
-   =
-   J R_{\mathrm{cam}} \Sigma_{3D} R_{\mathrm{cam}}^T J^T
-   $$
+### 2.2 3D Gaussian 投影到 2D
 
-   其中 $R_{\mathrm{cam}}$ 是世界坐标到相机坐标的旋转部分，$J$ 是透视投影函数在当前 3D Gaussian 中心处的一阶 Jacobian。
+在 `gaussian_renderer.py` 中实现从三维高斯到二维图像平面的投影。使用针孔相机投影的 Jacobian `J`，并结合相机旋转矩阵得到二维协方差：
 
-3. 在二维图像平面上计算每个 Gaussian 的密度，并按照深度顺序进行 alpha blending，得到最终渲染图像。
+$$\Sigma_{2D} = J R_{\mathrm{cam}} \Sigma_{3D} R_{\mathrm{cam}}^T J^T$$
 
-4. 为了减小纯 PyTorch 渲染的计算量，本实验从 COLMAP 的 13615 个初始点中采样 3000 个点用于简化版训练。
+其中 $R_{\mathrm{cam}}$ 是世界坐标到相机坐标的旋转部分，$J$ 是透视投影函数在当前 3D Gaussian 中心处的一阶 Jacobian。
+
+### 2.3 Gaussian 取值与 alpha blending
+
+在二维图像平面上计算每个 Gaussian 的密度，并按照深度顺序进行 alpha blending，得到最终渲染图像。
+
+### 2.4 点云采样
+
+为了减小纯 PyTorch 渲染的计算量，本实验从 COLMAP 的 13615 个初始点中采样 3000 个点用于简化版训练。
 
 训练命令如下：
 
